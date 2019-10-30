@@ -16,6 +16,7 @@ import javax.swing.*;
 public class Interface extends JFrame implements ActionListener {
 
     JFrame admin;
+    JFrame fDonor;
     ConxDB db = new ConxDB();
 
     public Interface() {
@@ -29,20 +30,24 @@ public class Interface extends JFrame implements ActionListener {
 
         JPanel mainPanel = new JPanel();
         JButton bAdmin = new JButton("Admin");
+        JButton bDonor = new JButton("Donante");
         JButton bDonate = new JButton("Donación");
         bAdmin.setPreferredSize(new Dimension(330, 20));
+        bDonor.setPreferredSize(new Dimension(330, 20));
         bDonate.setPreferredSize(new Dimension(330, 20));
         bAdmin.addActionListener(this);
+        bDonor.addActionListener(this);
         bDonate.addActionListener(this);
 
         mainPanel.add(bAdmin);
+        mainPanel.add(bDonor);
         mainPanel.add(bDonate);
         this.add(mainPanel);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("event: " + e.getActionCommand());
+//        System.out.println("event: " + e.getActionCommand());
         switch (e.getActionCommand()) {
             case "Admin":
                 JPanel pPass = new JPanel();
@@ -66,6 +71,15 @@ public class Interface extends JFrame implements ActionListener {
                         JOptionPane.showMessageDialog(null, "El user o pass son incorrectos", "ERROR", JOptionPane.WARNING_MESSAGE);
                     }
                 }
+                break;
+            case "Donante":
+                fDonor = new JFrame("Alta Donante");
+                fDonor.setIconImage(Toolkit.getDefaultToolkit().getImage("resource/cruzroja.png"));
+                fDonor.setSize(400, 500);
+                fDonor.setVisible(true);
+                fDonor.setLocation(((Toolkit.getDefaultToolkit().getScreenSize().width / 2) - this.getWidth() / 2) + this.getWidth(),
+                                (Toolkit.getDefaultToolkit().getScreenSize().height / 3) - this.getHeight() / 2);
+//                Donor do = new Donor(fDonor, db);
                 break;
             case "Donación":
                 break;
