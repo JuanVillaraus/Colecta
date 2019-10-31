@@ -84,7 +84,7 @@ public class ConxDB {
             return (ex.getMessage());
         }
     }
-    
+
     public String insertTipoDeposito(String tipoDeposito) {
         String query = "INSERT INTO \"TIPO_DEPOSITO\"(\"NOMBRE_TIPO_DEPOSITO\") VALUES(?)";
 
@@ -103,7 +103,7 @@ public class ConxDB {
             return (ex.getMessage());
         }
     }
-    
+
     public String insertGiro(String giro) {
         String query = "INSERT INTO \"GIRO\"(\"NOMBRE_GIRO\") VALUES(?)";
 
@@ -122,7 +122,7 @@ public class ConxDB {
             return (ex.getMessage());
         }
     }
-    
+
     public String insertPromotor(String promotor) {
         String query = "INSERT INTO \"PROMOTOR\"(\"NOMBRE_PROMOTOR\") VALUES(?)";
 
@@ -135,7 +135,34 @@ public class ConxDB {
             if (rs.next()) {
                 id = rs.getLong(1);
             }
-            return ("DP#" + id);
+            return ("PR#" + id);
+        } catch (SQLException ex) {
+            System.err.println("ConxDB/insertOper$\n" + ex.getClass().getName() + "\n" + ex.getMessage());
+            return (ex.getMessage());
+        }
+    }
+
+    public String insertDonor(String name, String date, String dir, String cp, String cel, String contacto, int idGiro) {
+        String query = "INSERT INTO \"DONANTE\"(\"NOMBRE_DONANTE\", \"FECHA_ALTA_DONANTE\", "
+                + "\"DOMICILIO_DONANTE\", \"CP_DONANTE\", \"CEL_DONANTE\", \"CONTACTO_DONANTE\", "
+                + "\"ID_GIRO_DONANTE\") VALUES(?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement pst = c.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+            pst.setString(1, name);
+            pst.setString(2, date);
+            pst.setString(3, dir);
+            pst.setString(4, cp);
+            pst.setString(5, cel);
+            pst.setString(6, contacto);
+            pst.setInt(7, idGiro);
+            pst.executeUpdate();
+            Long id = null;
+            ResultSet rs = pst.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getLong(1);
+            }
+            return ("DT#" + id);
         } catch (SQLException ex) {
             System.err.println("ConxDB/insertOper$\n" + ex.getClass().getName() + "\n" + ex.getMessage());
             return (ex.getMessage());
@@ -196,7 +223,7 @@ public class ConxDB {
                 String id = rs.getString("PK_ID_TIPO_DONATIVO");
                 String tipo = rs.getString("NOMBRE_TIPO_DONATIVO");
 
-                resp += ("DN#"+id + " " + tipo + "\n");
+                resp += ("DN#" + id + " " + tipo + "\n");
             }
 
             rs.close();
@@ -207,7 +234,7 @@ public class ConxDB {
             return e.getMessage();
         }
     }
-    
+
     public String consultTipoDonativo(int id) {
         String resp = "";
         try {
@@ -229,7 +256,7 @@ public class ConxDB {
             return e.getMessage();
         }
     }
-    
+
     public String consultTipoDeposito() {
         String resp = "";
         try {
@@ -242,7 +269,7 @@ public class ConxDB {
                 String id = rs.getString("PK_ID_TIPO_DEPOSITO");
                 String tipo = rs.getString("NOMBRE_TIPO_DEPOSITO");
 
-                resp += ("DP#"+id + " " + tipo + "\n");
+                resp += ("DP#" + id + " " + tipo + "\n");
             }
 
             rs.close();
@@ -253,7 +280,7 @@ public class ConxDB {
             return e.getMessage();
         }
     }
-    
+
     public String consultTipoDeposito(int id) {
         String resp = "";
         try {
@@ -275,7 +302,7 @@ public class ConxDB {
             return e.getMessage();
         }
     }
-    
+
     public String consultGiro() {
         String resp = "";
         try {
@@ -288,7 +315,7 @@ public class ConxDB {
                 String id = rs.getString("PK_ID_GIRO");
                 String tipo = rs.getString("NOMBRE_GIRO");
 
-                resp += ("GR#"+id + " " + tipo + "\n");
+                resp += ("GR#" + id + " " + tipo + "\n");
             }
 
             rs.close();
@@ -299,7 +326,7 @@ public class ConxDB {
             return e.getMessage();
         }
     }
-    
+
     public String consultGiro(int id) {
         String resp = "";
         try {
@@ -321,7 +348,7 @@ public class ConxDB {
             return e.getMessage();
         }
     }
-    
+
     public String deleteTipoDonativo(int id) {
         String SQL = "DELETE FROM \"TIPO_DONATIVO\" WHERE \"PK_ID_TIPO_DONATIVO\" = ?";
         try (PreparedStatement pstmt = c.prepareStatement(SQL)) {
@@ -335,7 +362,7 @@ public class ConxDB {
             return (ex.getMessage());
         }
     }
-    
+
     public String deleteTipoDeposito(int id) {
         String SQL = "DELETE FROM \"TIPO_DEPOSITO\" WHERE \"PK_ID_TIPO_DEPOSITO\" = ?";
         try (PreparedStatement pstmt = c.prepareStatement(SQL)) {
@@ -349,7 +376,7 @@ public class ConxDB {
             return (ex.getMessage());
         }
     }
-    
+
     public String deleteGiro(int id) {
         String SQL = "DELETE FROM \"GIRO\" WHERE \"PK_ID_GIRO\" = ?";
         try (PreparedStatement pstmt = c.prepareStatement(SQL)) {

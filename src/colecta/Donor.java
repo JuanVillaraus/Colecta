@@ -7,6 +7,8 @@ package colecta;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.text.*;
+import java.util.*;
 import javax.swing.*;
 
 /**
@@ -17,6 +19,7 @@ public class Donor extends JPanel implements ActionListener {
 
     JFrame window;
     ConxDB db;
+    SimpleDateFormat timeFull = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     JTextField tName = new JTextField(30);
     JTextField tLastName = new JTextField(30);
     JTextField tLastName2 = new JTextField(30);
@@ -46,10 +49,10 @@ public class Donor extends JPanel implements ActionListener {
         alert.setHorizontalAlignment(JTextField.CENTER);
         this.add(lName);
         this.add(tName);
-        this.add(lLastName);
-        this.add(tLastName);
-        this.add(lLastName2);
-        this.add(tLastName2);
+//        this.add(lLastName);
+//        this.add(tLastName);
+//        this.add(lLastName2);
+//        this.add(tLastName2);
         this.add(mBarGiro);
         this.add(lDir);
         this.add(tDir);
@@ -64,12 +67,15 @@ public class Donor extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Calendar calendario = new GregorianCalendar();
         if (e.getSource().getClass().getSimpleName().equals("JButton")) {
             if (tName.getText().equals("")) {
                 alert.setText("Deben escribir un nombre");
                 alert.setBackground(Color.RED);
             } else {
-
+                System.out.println("insert: "+db.insertDonor(tName.getText(), 
+                        timeFull.format(calendario.getTime()), tDir.getText(), 
+                        tCP.getText(), tCel.getText(), "", WIDTH));
             }
         } else {
             mGiro.setText(e.getActionCommand());
