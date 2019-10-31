@@ -79,7 +79,7 @@ public class Interface extends JFrame implements ActionListener {
                 fDonor.setVisible(true);
                 fDonor.setLocation(((Toolkit.getDefaultToolkit().getScreenSize().width / 2) - this.getWidth() / 2) + this.getWidth(),
                                 (Toolkit.getDefaultToolkit().getScreenSize().height / 3) - this.getHeight() / 2);
-//                Donor do = new Donor(fDonor, db);
+                fDonor.add(new Donor(fDonor, db));
                 break;
             case "Donación":
                 break;

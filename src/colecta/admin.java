@@ -102,34 +102,39 @@ public class admin extends JPanel implements ActionListener {
         if (e.getSource().getClass().getSimpleName().equals("JButton")) {
             switch (e.getActionCommand()) {
                 case "Agregar":
-                    switch (mCategory.getText()) {
-                        case "Tipo Donativo":
-                            resultDB = db.insertTipoDonativo(tName.getText());
-                            if (resultDB.toCharArray()[0] == 'D' && resultDB.toCharArray()[1] == 'N') {
-                                alert.setText("El" + mCategory.getText() + "ha sido agregada exitosamente");
-                                alert.setBackground(Color.GREEN);
-                                tName.setText(null);
-                                aConsult.setText(db.consultTipoDonativo());
-                            }
-                            break;
-                        case "Tipo Deposito":
-                            resultDB = db.insertTipoDeposito(tName.getText());
-                            if (resultDB.toCharArray()[0] == 'D' && resultDB.toCharArray()[1] == 'P') {
-                                alert.setText("El" + mCategory.getText() + "ha sido agregada exitosamente");
-                                alert.setBackground(Color.GREEN);
-                                tName.setText(null);
-                                aConsult.setText(db.consultTipoDeposito());
-                            }
-                            break;
-                        case "Giro del Donante":
-                            resultDB = db.insertGiro(tName.getText());
-                            if (resultDB.toCharArray()[0] == 'G' && resultDB.toCharArray()[1] == 'R') {
-                                alert.setText("El" + mCategory.getText() + "ha sido agregada exitosamente");
-                                alert.setBackground(Color.GREEN);
-                                tName.setText(null);
-                                aConsult.setText(db.consultGiro());
-                            }
-                            break;
+                    if (tName.getText().equals("")) {
+                        alert.setText("Deben escribir un nombre");
+                        alert.setBackground(Color.RED);
+                    } else {
+                        switch (mCategory.getText()) {
+                            case "Tipo Donativo":
+                                resultDB = db.insertTipoDonativo(tName.getText());
+                                if (resultDB.toCharArray()[0] == 'D' && resultDB.toCharArray()[1] == 'N') {
+                                    alert.setText("El" + mCategory.getText() + "ha sido agregada exitosamente");
+                                    alert.setBackground(Color.GREEN);
+                                    tName.setText(null);
+                                    aConsult.setText(db.consultTipoDonativo());
+                                }
+                                break;
+                            case "Tipo Deposito":
+                                resultDB = db.insertTipoDeposito(tName.getText());
+                                if (resultDB.toCharArray()[0] == 'D' && resultDB.toCharArray()[1] == 'P') {
+                                    alert.setText("El" + mCategory.getText() + "ha sido agregada exitosamente");
+                                    alert.setBackground(Color.GREEN);
+                                    tName.setText(null);
+                                    aConsult.setText(db.consultTipoDeposito());
+                                }
+                                break;
+                            case "Giro del Donante":
+                                resultDB = db.insertGiro(tName.getText());
+                                if (resultDB.toCharArray()[0] == 'G' && resultDB.toCharArray()[1] == 'R') {
+                                    alert.setText("El" + mCategory.getText() + "ha sido agregada exitosamente");
+                                    alert.setBackground(Color.GREEN);
+                                    tName.setText(null);
+                                    aConsult.setText(db.consultGiro());
+                                }
+                                break;
+                        }
                     }
                     break;
                 case "Eliminar":
@@ -188,7 +193,8 @@ public class admin extends JPanel implements ActionListener {
         } else {
             tName.setText(null);
             tId.setText(null);
-//            aConsult.setText("");
+            alert.setBackground(null);
+            alert.setText(null);
             switch (e.getActionCommand()) {
                 case "Tipo Donativo":
                 case "Tipo Deposito":
@@ -218,7 +224,6 @@ public class admin extends JPanel implements ActionListener {
                     break;
                 case "Agregar":
                     mOption.setText(e.getActionCommand());
-//                    mOption.setVisible(true);
                     lName.setVisible(true);
                     tName.setVisible(true);
                     bInsert.setVisible(true);
@@ -229,8 +234,6 @@ public class admin extends JPanel implements ActionListener {
                     break;
                 case "Eliminar":
                     mOption.setText(e.getActionCommand());
-//                    mOption.setText("Opción");
-//                    mOption.setVisible(true);
                     lName.setVisible(false);
                     tName.setVisible(false);
                     bInsert.setVisible(false);
