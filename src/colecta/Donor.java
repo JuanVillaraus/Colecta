@@ -16,7 +16,7 @@ import javax.swing.*;
  * @author Sistemas
  */
 public class Donor extends JPanel implements ActionListener {
-
+    
     JFrame window;
     ConxDB db;
     SimpleDateFormat timeFull = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -28,7 +28,7 @@ public class Donor extends JPanel implements ActionListener {
     JTextField tCel = new JTextField(30);
     JTextField alert = new JTextField(10);
     JMenu mGiro = new JMenu("Giro");
-
+    
     public Donor(JFrame window, ConxDB db) {
         this.window = window;
         this.db = db;
@@ -64,24 +64,34 @@ public class Donor extends JPanel implements ActionListener {
         pAlert.add(alert);
         window.add(pAlert, BorderLayout.SOUTH);
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         Calendar calendario = new GregorianCalendar();
         if (e.getSource().getClass().getSimpleName().equals("JButton")) {
-            if (tName.getText().equals("")) {
+            if (tName.getText().equals("") || tDir.getText().equals("") || tCP.getText().equals("")
+                    || tCel.getText().equals("") || mGiro.getText().equals("Giro")) {
                 alert.setText("Deben escribir un nombre");
                 alert.setBackground(Color.RED);
             } else {
-                System.out.println("insert: "+db.insertDonor(tName.getText(), 
-                        timeFull.format(calendario.getTime()), tDir.getText(), 
-                        tCP.getText(), tCel.getText(), "", WIDTH));
+                String idGiro = "";
+                char[] cadena = mGiro.getText().toCharArray();
+                for (int i = 3; i < cadena.length; i++) {
+                    if (cadena[i] == ' ') {
+                        i = cadena.length;
+                    } else {
+                        idGiro += cadena[i];
+                    }
+                }
+                System.out.println("insert: " + db.insertDonor(tName.getText(),
+                        timeFull.format(calendario.getTime()), tDir.getText(),
+                        tCP.getText(), tCel.getText(), "", Integer.valueOf(idGiro)));
             }
         } else {
             mGiro.setText(e.getActionCommand());
         }
     }
-
+    
     public void menuUpdate() {
         char[] cadena;
         String giro = db.consultGiro();
@@ -98,5 +108,5 @@ public class Donor extends JPanel implements ActionListener {
             }
         }
     }
-
+    
 }
