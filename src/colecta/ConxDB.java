@@ -21,7 +21,7 @@ public class ConxDB {
     public ConxDB(JFrame frameInsert) {
         try {
             Class.forName("org.postgresql.Driver");
-            this.c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ColectaDB", "postgres", "admin");
+            this.c = DriverManager.getConnection("jdbc:postgresql://192.168.1.101:5432/ColectaDB", "admincrm", "CRM*1975*dvb");
             System.out.println("Opened database successfully");
         } catch (ClassNotFoundException | SQLException e) {
             //e.printStackTrace();
@@ -33,7 +33,7 @@ public class ConxDB {
     public ConxDB() {
         try {
             Class.forName("org.postgresql.Driver");
-            this.c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ColectaDB", "postgres", "admin");
+            this.c = DriverManager.getConnection("jdbc:postgresql://192.168.1.101:5432/ColectaDB", "admincrm", "CRM*1975*dvb");
             System.out.println("Opened database successfully");
         } catch (ClassNotFoundException | SQLException e) {
             //e.printStackTrace();
@@ -313,9 +313,9 @@ public class ConxDB {
                     + "ORDER BY \"PK_ID_GIRO\" ASC;");
             while (rs.next()) {
                 String id = rs.getString("PK_ID_GIRO");
-                String tipo = rs.getString("NOMBRE_GIRO");
+                String name = rs.getString("NOMBRE_GIRO");
 
-                resp += ("GR#" + id + " " + tipo + "\n");
+                resp += ("GR#" + id + " " + name + "\n");
             }
 
             rs.close();
@@ -337,6 +337,52 @@ public class ConxDB {
                     + "WHERE \"PK_ID_GIRO\"= '" + id + "';");
             while (rs.next()) {
                 String nom = rs.getString("NOMBRE_GIRO");
+                resp = nom;
+            }
+
+            rs.close();
+            st.close();
+            return resp;
+        } catch (Exception e) {
+            System.err.println("ConxDB/Consulta$\t" + e.getClass().getName() + "\t" + e.getMessage());
+            return e.getMessage();
+        }
+    }
+    
+    public String consultPromotor() {
+        String resp = "";
+        try {
+            Statement st = c.createStatement();
+            ResultSet rs = st.executeQuery(""
+                    + "SELECT * "
+                    + "FROM \"PROMOTOR\" "
+                    + "ORDER BY \"PK_ID_PROMOTOR\" ASC;");
+            while (rs.next()) {
+                String id = rs.getString("PK_ID_PROMOTOR");
+                String name = rs.getString("NOMBRE_PROMOTOR");
+
+                resp += ("PR#" + id + " " + name + "\n");
+            }
+
+            rs.close();
+            st.close();
+            return resp;
+        } catch (Exception e) {
+            System.err.println("ConxDB/Consulta$\t" + e.getClass().getName() + "\t" + e.getMessage());
+            return e.getMessage();
+        }
+    }
+    
+    public String consultPromotor(int id) {
+        String resp = "";
+        try {
+            Statement st = c.createStatement();
+            ResultSet rs = st.executeQuery(""
+                    + "SELECT * "
+                    + "FROM \"PROMOTOR\" "
+                    + "WHERE \"PK_ID_PROMOTOR\"= '" + id + "';");
+            while (rs.next()) {
+                String nom = rs.getString("NOMBRE_PROMOTOR");
                 resp = nom;
             }
 

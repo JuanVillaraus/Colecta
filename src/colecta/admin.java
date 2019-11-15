@@ -220,6 +220,9 @@ public class admin extends JPanel implements ActionListener {
                         case "Giro del Donante":
                             aConsult.setText(db.consultGiro());
                             break;
+                        case "Promotor":
+                            aConsult.setText(db.consultPromotor());
+                            break;
                     }
                     break;
                 case "Agregar":
