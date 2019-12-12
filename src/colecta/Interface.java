@@ -16,33 +16,40 @@ import javax.swing.*;
 public class Interface extends JFrame implements ActionListener {
 
     JFrame admin;
+    JFrame fPromoter;
     JFrame fDonor;
+    JFrame fDonate;
     ConxDB db = new ConxDB();
 
     public Interface() {
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("resource/cruzroja.png"));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(350, 500);
-        this.setVisible(true);
         this.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width / 2) - this.getWidth() / 2,
                 (Toolkit.getDefaultToolkit().getScreenSize().height / 3) - this.getHeight() / 2);
         this.setTitle("Sistema de Colecta");
 
         JPanel mainPanel = new JPanel();
         JButton bAdmin = new JButton("Admin");
+        JButton bPromoter = new JButton("Promotor");
         JButton bDonor = new JButton("Donante");
         JButton bDonate = new JButton("Donación");
         bAdmin.setPreferredSize(new Dimension(330, 20));
+        bPromoter.setPreferredSize(new Dimension(330, 20));
         bDonor.setPreferredSize(new Dimension(330, 20));
         bDonate.setPreferredSize(new Dimension(330, 20));
         bAdmin.addActionListener(this);
+        bPromoter.addActionListener(this);
         bDonor.addActionListener(this);
         bDonate.addActionListener(this);
 
         mainPanel.add(bAdmin);
+        mainPanel.add(bPromoter);
         mainPanel.add(bDonor);
         mainPanel.add(bDonate);
         this.add(mainPanel);
+        
+        this.setVisible(true);
     }
 
     @Override
@@ -72,6 +79,15 @@ public class Interface extends JFrame implements ActionListener {
                     }
                 }
                 break;
+            case "Promotor":
+                fPromoter = new JFrame("Alta Promotor");
+                fPromoter.setIconImage(Toolkit.getDefaultToolkit().getImage("resource/cruzroja.png"));
+                fPromoter.setSize(400, 500);
+                fPromoter.setVisible(true);
+                fPromoter.setLocation(((Toolkit.getDefaultToolkit().getScreenSize().width / 2) - this.getWidth() / 2) + this.getWidth(),
+                                (Toolkit.getDefaultToolkit().getScreenSize().height / 3) - this.getHeight() / 2);
+                fPromoter.add(new Promoter(fPromoter, db));
+                break;
             case "Donante":
                 fDonor = new JFrame("Alta Donante");
                 fDonor.setIconImage(Toolkit.getDefaultToolkit().getImage("resource/cruzroja.png"));
@@ -82,6 +98,13 @@ public class Interface extends JFrame implements ActionListener {
                 fDonor.add(new Donor(fDonor, db));
                 break;
             case "Donación":
+                fDonate = new JFrame("Donación");
+                fDonate.setIconImage(Toolkit.getDefaultToolkit().getImage("resource/cruzroja.png"));
+                fDonate.setSize(400, 500);
+                fDonate.setVisible(true);
+                fDonate.setLocation(((Toolkit.getDefaultToolkit().getScreenSize().width / 2) - this.getWidth() / 2) - fDonate.getWidth(),
+                                (Toolkit.getDefaultToolkit().getScreenSize().height / 3) - this.getHeight() / 2);
+                fDonate.add(new Donate(fDonate, db));
                 break;
         }
     }

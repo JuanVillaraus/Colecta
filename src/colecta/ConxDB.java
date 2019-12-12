@@ -394,6 +394,52 @@ public class ConxDB {
             return e.getMessage();
         }
     }
+    
+    public String consultDonor() {
+        String resp = "";
+        try {
+            Statement st = c.createStatement();
+            ResultSet rs = st.executeQuery(""
+                    + "SELECT * "
+                    + "FROM \"DONANTE\" "
+                    + "ORDER BY \"PK_ID_DONANTE\" ASC;");
+            while (rs.next()) {
+                String id = rs.getString("PK_ID_DONANTE");
+                String name = rs.getString("NOMBRE_DONANTE");
+
+                resp += ("DT#" + id + " " + name + "\n");
+            }
+
+            rs.close();
+            st.close();
+            return resp;
+        } catch (Exception e) {
+            System.err.println("ConxDB/Consulta$\t" + e.getClass().getName() + "\t" + e.getMessage());
+            return e.getMessage();
+        }
+    }
+    
+    public String consultDonor(int id) {
+        String resp = "";
+        try {
+            Statement st = c.createStatement();
+            ResultSet rs = st.executeQuery(""
+                    + "SELECT * "
+                    + "FROM \"DONANTE\" "
+                    + "WHERE \"PK_ID_DONANTE\"= '" + id + "';");
+            while (rs.next()) {
+                String nom = rs.getString("NOMBRE_DONANTE");
+                resp = nom;
+            }
+
+            rs.close();
+            st.close();
+            return resp;
+        } catch (Exception e) {
+            System.err.println("ConxDB/Consulta$\t" + e.getClass().getName() + "\t" + e.getMessage());
+            return e.getMessage();
+        }
+    }
 
     public String deleteTipoDonativo(int id) {
         String SQL = "DELETE FROM \"TIPO_DONATIVO\" WHERE \"PK_ID_TIPO_DONATIVO\" = ?";

@@ -24,12 +24,22 @@ public class admin extends JPanel implements ActionListener {
     String resultDB = null;
     JMenu mOption = new JMenu("Opción");
     JMenu mCategory = new JMenu("Opción");
-    JLabel lName = new JLabel("Nombre");
-    JLabel lId = new JLabel("ID");
-    JTextField tName = new JTextField(30);
     JTextField tId = new JTextField(10);
+    JTextField tName = new JTextField(30);
+    JTextField tOcup = new JTextField(30);
+    JTextField tDir = new JTextField(30);
+    JTextField tTel = new JTextField(30);
+    JTextField tCel = new JTextField(30);
+    JTextField tMail = new JTextField(30);
     JTextField alert = new JTextField(10);
     JTextArea aConsult = new JTextArea();
+    JLabel lId = new JLabel("ID");
+    JLabel lName = new JLabel("Nombre");
+    JLabel lOcup = new JLabel("Ocupación");
+    JLabel lDir = new JLabel("Domicilio");
+    JLabel lTel = new JLabel("Telefono");
+    JLabel lCel = new JLabel("Celular");
+    JLabel lMail = new JLabel("Correo");
 
     public admin(JFrame window, ConxDB db, Interface frameMain) {
         this.window = window;
